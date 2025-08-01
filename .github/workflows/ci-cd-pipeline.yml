@@ -24,6 +24,17 @@ jobs:
           args: >
             -Dsonar.projectKey=sonar-apache
             -Dsonar.sources=.
+      
+      # Quality Gate Enforcement
+      # To fail the pipeline if code quality is poor
+
+      - name: Check SonarQube Quality Gate
+        uses: sonarsource/sonarqube-quality-gate-action@v1
+        with:
+          scanMetadataReportFile: .scannerwork/report-task.txt
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
 
       - name: DockerHub Login
