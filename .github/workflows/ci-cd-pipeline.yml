@@ -15,6 +15,12 @@ jobs:
 
       # No build step needed for plain HTML
       # (If using a static site generator, add build steps here)
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
 
       - name: DockerHub Login
         uses: docker/login-action@v3
@@ -28,5 +34,4 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/apache-static-site:latest
-
 
